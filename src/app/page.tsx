@@ -1,6 +1,7 @@
 "use client";
-import { Header } from "@/components/Header";
 import { useState } from "react";
+import { Header } from "@/components/Header";
+import { Sidebar } from "@/components/Sidebar/Sidebar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const options: Intl.DateTimeFormatOptions = {
@@ -37,7 +38,7 @@ export default function HomePage() {
       <main className="grid grid-cols-[180px_1fr_280px] gap-6 max-w-7xl m-auto p-6">
         <h1 className="sr-only">Bem vindo ao ByteBank</h1>
 
-        <section className="bg-white">NAV</section>
+        <Sidebar />
 
         <section className="bg-foreground rounded-lg min-h-96 p-6">
           <div className="greetings text-white">
@@ -45,19 +46,19 @@ export default function HomePage() {
             <p className="text-sm capitalize">{dataFormatada}</p>
           </div>
           <div className="summary text-white ml-auto w-1/2">
-            <div className="flex items-center gap-6 border-b border-b-orange pb-4 mb-4">
+            <div className="flex items-center gap-6 border-b-2 border-b-orange-600 pb-4 mb-4">
               <h3>Saldo</h3>
               {isBalanceVisible ? (
                 <FaEye
                   size={20}
-                  className="text-orange"
+                  className="text-orange-600"
                   role="button"
                   onClick={handleBalanceVisibility}
                 />
               ) : (
                 <FaEyeSlash
                   size={20}
-                  className="text-orange"
+                  className="text-orange-600"
                   role="button"
                   onClick={handleBalanceVisibility}
                 >

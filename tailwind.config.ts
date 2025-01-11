@@ -11,7 +11,6 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        orange: "#FF5031",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
