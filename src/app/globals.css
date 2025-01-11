@@ -26,3 +26,13 @@ body {
   background: var(--background);
   font-family: "Inter", serif;
 }
+
+@layer base {
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+}
