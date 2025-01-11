@@ -1,0 +1,15 @@
+const useFormatCurrency = () => {
+  const formatCurrency = (amount: number) => {
+    const value = new Intl.NumberFormat("pt-BR", {
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      style: "currency",
+    }).format(amount);
+
+    return value;
+  };
+
+  return formatCurrency;
+};
+
+export default useFormatCurrency;

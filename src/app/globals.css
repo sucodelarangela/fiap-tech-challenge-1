@@ -1,42 +1,38 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
+:root {
+  --background: #e4ede3;
+  --foreground: #004d61;
+}
+
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #004d61;
     --foreground: #ededed;
   }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+} */
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Inter", serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+@layer base {
+  h2 {
+    @apply text-2xl font-semibold;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+  h3 {
+    @apply text-xl font-semibold;
   }
 }
