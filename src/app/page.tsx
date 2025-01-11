@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
+import { Statement } from "@/components/Statement/Statement";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useFormatCurrency from "./hooks/useFormatCurrency";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -12,17 +14,8 @@ const options: Intl.DateTimeFormatOptions = {
 };
 const dataFormatada = new Date().toLocaleDateString("pt-BR", options);
 
-const formatCurrency = (amount: number) => {
-  const value = new Intl.NumberFormat("pt-BR", {
-    currency: "BRL",
-    minimumFractionDigits: 2,
-    style: "currency",
-  }).format(amount);
-
-  return value;
-};
-
 export default function HomePage() {
+  const formatCurrency = useFormatCurrency();
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
   const [balance, setBalance] = useState(formatCurrency(2500));
 
@@ -40,7 +33,7 @@ export default function HomePage() {
 
         <Sidebar />
 
-        <section className="bg-foreground rounded-lg min-h-96 p-6">
+        <section className="bg-foreground rounded-lg max-h-96 p-6">
           <div className="greetings text-white">
             <h2 className="mb-6">Olá, Fulano! :)</h2>
             <p className="text-sm capitalize">{dataFormatada}</p>
@@ -73,7 +66,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="bg-white">EXTRATO</section>
+        <Statement />
       </main>
     </>
   );
