@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        pixels: "url('/pixels.svg')",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
