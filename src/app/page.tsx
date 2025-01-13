@@ -1,10 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Header } from "@/components/Header";
-import { Sidebar } from "@/components/Sidebar/Sidebar";
 import { Statement } from "@/components/Statement/Statement";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import useFormatCurrency from "./hooks/useFormatCurrency";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -27,47 +25,40 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
-      <main className="grid grid-cols-[180px_1fr_280px] gap-6 max-w-7xl m-auto p-6">
-        <h1 className="sr-only">Bem vindo ao ByteBank</h1>
-
-        <Sidebar />
-
-        <section className="bg-foreground rounded-lg max-h-96 p-6">
-          <div className="greetings text-white">
-            <h2 className="mb-6">Olá, Fulano! :)</h2>
-            <p className="text-sm capitalize">{dataFormatada}</p>
+      <section className="bg-foreground rounded-lg max-h-96 p-6">
+        <div className="greetings text-white">
+          <h2 className="mb-6">Olá, Fulano! :)</h2>
+          <p className="text-sm capitalize">{dataFormatada}</p>
+        </div>
+        <div className="summary text-white ml-auto w-1/2">
+          <div className="flex items-center gap-6 border-b-2 border-b-orange-600 pb-4 mb-4">
+            <h3>Saldo</h3>
+            {isBalanceVisible ? (
+              <FaEye
+                size={20}
+                className="text-orange-600"
+                role="button"
+                onClick={handleBalanceVisibility}
+              />
+            ) : (
+              <FaEyeSlash
+                size={20}
+                className="text-orange-600"
+                role="button"
+                onClick={handleBalanceVisibility}
+              >
+                coisa
+              </FaEyeSlash>
+            )}
           </div>
-          <div className="summary text-white ml-auto w-1/2">
-            <div className="flex items-center gap-6 border-b-2 border-b-orange-600 pb-4 mb-4">
-              <h3>Saldo</h3>
-              {isBalanceVisible ? (
-                <FaEye
-                  size={20}
-                  className="text-orange-600"
-                  role="button"
-                  onClick={handleBalanceVisibility}
-                />
-              ) : (
-                <FaEyeSlash
-                  size={20}
-                  className="text-orange-600"
-                  role="button"
-                  onClick={handleBalanceVisibility}
-                >
-                  coisa
-                </FaEyeSlash>
-              )}
-            </div>
-            <div>
-              <p className="pb-2">Conta Corrente</p>
-              <p className="font-roboto-mono text-3xl pr-16">{balance}</p>
-            </div>
+          <div>
+            <p className="pb-2">Conta Corrente</p>
+            <p className="font-roboto-mono text-3xl pr-16">{balance}</p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <Statement />
-      </main>
+      <Statement />
     </>
   );
 }
