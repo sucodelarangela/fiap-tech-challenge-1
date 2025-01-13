@@ -1,6 +1,6 @@
-import useFormatCurrency from "@/app/hooks/useFormatCurrency";
 import React from "react";
 import styles from "./Statement.module.css";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 interface StatementProps {
   transactions?: Transaction[];
@@ -9,19 +9,29 @@ interface StatementProps {
 interface Transaction {
   date: string;
   amount: number;
-  type: "depósito" | "transferência";
+  type: "deposit" | "transfer";
 }
 
+// TODO: Remover transações mocadas / substituir por dados da API
 const mockTransactions: Transaction[] = [
-  { date: "2023-10-01", amount: 100, type: "depósito" },
-  { date: "2023-10-02", amount: 50, type: "transferência" },
-  { date: "2023-10-03", amount: 200, type: "depósito" },
-  { date: "2023-10-04", amount: -150, type: "transferência" },
+  { date: "2023-10-01", amount: 100, type: "deposit" },
+  { date: "2023-10-02", amount: 50, type: "transfer" },
+  { date: "2023-10-03", amount: 200, type: "deposit" },
+  { date: "2023-10-04", amount: -150, type: "transfer" },
 ];
 
 function getMonthName(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleString("pt-BR", { month: "long" });
+}
+
+function getTransactionName(transaction: string) {
+  const transactionMap = new Map([
+    ["deposit", "depósito"],
+    ["transfer", "transferência"],
+    ["expense", "despesa"],
+  ]);
+  return transactionMap.get(transaction);
 }
 
 export function Statement({ transactions = mockTransactions }: StatementProps) {
@@ -38,7 +48,7 @@ export function Statement({ transactions = mockTransactions }: StatementProps) {
                 {getMonthName(transaction.date)}
               </span>
               <p className="flex justify-between items-center capitalize">
-                {transaction.type}{" "}
+                {getTransactionName(transaction.type)}
                 <span className="text-gray-400 text-sm">
                   {transaction.date}
                 </span>

@@ -22,7 +22,7 @@ export function AddTransactionPage() {
           }
           className="p-4 border border-foreground rounded-lg mb-8"
         >
-          <option value="" selected disabled>
+          <option defaultValue="" disabled>
             Selecione o tipo de transação
           </option>
           <option value="deposit">Depósito</option>

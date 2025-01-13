@@ -1,3 +1,4 @@
+"use client";
 import { usePathname } from "next/navigation";
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
@@ -6,7 +7,7 @@ export function Sidebar() {
   const pathname = usePathname();
   const links = [
     { href: "/", label: "Home" },
-    { href: "/transferencias", label: "Transferências" },
+    { href: "/transactions", label: "Extrato" },
     { href: "/investimentos", label: "Investimentos" },
     { href: "/outros-servicos", label: "Outros Serviços" },
   ];

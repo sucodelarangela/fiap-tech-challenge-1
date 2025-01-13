@@ -5,7 +5,7 @@ import { Modal } from "@/components/Modal";
 import { AddTransactionPage } from "@/components/AddTransaction";
 import { Statement } from "@/components/Statement/Statement";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import useFormatCurrency from "./hooks/useFormatCurrency";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
