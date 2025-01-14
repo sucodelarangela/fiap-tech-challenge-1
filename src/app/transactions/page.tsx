@@ -110,7 +110,7 @@ export default function TransactionsPage() {
 
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
         <h2 className="mb-8">Deletar Transação</h2>
-        <p className="mb-8">
+        <p className="rounded-md p-1 mb-8">
           Esta ação irá excluir definitivamente a transação de{" "}
           <span className="font-semibold capitalize">
             {getTransactionName(editingTransaction?.type)}
