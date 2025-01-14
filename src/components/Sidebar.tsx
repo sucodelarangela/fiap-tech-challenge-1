@@ -29,7 +29,7 @@ export function Sidebar({
       className={`${
         isMobile
           ? `fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform transition-transform p-6 ${mobileClasses}`
-          : "hidden md:block bg-white rounded-lg p-6 md:p-4 lg:p-6"
+          : "hidden md:block bg-white rounded-lg p-6 md:p-4 md:col-span-2 lg:col-span-1 lg:p-6"
       }`}
     >
       <button
