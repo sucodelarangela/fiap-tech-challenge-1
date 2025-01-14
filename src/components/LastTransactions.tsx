@@ -1,8 +1,7 @@
 import React from "react";
-import styles from "./Statement.module.css";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 
-interface StatementProps {
+interface LastTransactionsProps {
   transactions?: Transaction[];
 }
 
@@ -34,31 +33,33 @@ function getTransactionName(transaction: string) {
   return transactionMap.get(transaction);
 }
 
-export function Statement({ transactions = mockTransactions }: StatementProps) {
+export function LastTransactions({
+  transactions = mockTransactions,
+}: LastTransactionsProps) {
   const formatCurrency = useFormatCurrency();
 
   return (
     <section className="bg-white rounded-lg p-6">
       <h2 className="font-bold pb-6">Últimas Transações</h2>
-      <ul>
+      <ul className="grid md:grid-cols-2 md:gap-x-10 lg:grid-cols-1">
         {transactions.map((transaction, index) => (
-          <React.Fragment key={index}>
-            <li className={styles.transaction}>
-              <span className="text-lime-500 text-sm font-semibold capitalize">
-                {getMonthName(transaction.date)}
-              </span>
-              <p className="flex justify-between items-center capitalize">
-                {getTransactionName(transaction.type)}
-                <span className="text-gray-400 text-sm">
-                  {transaction.date}
-                </span>
-              </p>
-              <p className="font-roboto-mono font-semibold">
-                {formatCurrency(transaction.amount)}
-              </p>
-            </li>
-            <div className={styles.divider}></div>
-          </React.Fragment>
+          <li
+            key={index}
+            className={`flex flex-col gap-2 border-b-2 border-dashed border-lime-500 py-4 ${
+              index === 0 ? "pt-0" : ""
+            }`}
+          >
+            <span className="text-lime-500 text-sm font-semibold capitalize">
+              {getMonthName(transaction.date)}
+            </span>
+            <p className="flex justify-between items-center capitalize">
+              {getTransactionName(transaction.type)}
+              <span className="text-gray-400 text-sm">{transaction.date}</span>
+            </p>
+            <p className="font-roboto-mono font-semibold">
+              {formatCurrency(transaction.amount)}
+            </p>
+          </li>
         ))}
       </ul>
     </section>

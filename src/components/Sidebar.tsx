@@ -1,6 +1,5 @@
 "use client";
 import { usePathname } from "next/navigation";
-import styles from "./Sidebar.module.css";
 import Link from "next/link";
 
 export function Sidebar() {
@@ -13,16 +12,14 @@ export function Sidebar() {
   ];
 
   return (
-    <section className="bg-white text-center rounded-lg p-6">
+    <section className="hidden lg:block bg-white text-center rounded-lg p-6">
       <nav>
         <ul>
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`${styles.link} ${
-                  pathname === link.href ? styles.active : ""
-                }`}
+                className={`link ${pathname === link.href ? "active" : ""}`}
                 aria-current={pathname === link.href ? "page" : undefined}
               >
                 {link.label}
