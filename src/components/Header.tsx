@@ -1,18 +1,46 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
+import Hamburger from "hamburger-react";
+import { Sidebar } from "./Sidebar";
 
-export const Header = () => (
-  <header className="bg-foreground w-full p-8">
-    <section className="flex justify-between max-w-7xl m-auto">
-      <Image src="/logo.png" alt="Bytebank" width={140} height={40} />
-      <div className="flex items-center gap-10 text-white">
-        <span>Fulano de Tal</span>
+export const Header = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <header className="bg-foreground w-full p-8">
+      <section className="flex justify-between max-w-7xl m-auto">
         <Image
-          src="/avatar.svg"
-          alt="Avatar do Usuário"
-          width={40}
+          src="/logo.png"
+          alt="Bytebank"
+          width={140}
           height={40}
+          className="hidden md:block"
         />
-      </div>
-    </section>
-  </header>
-);
+
+        <span className="md:hidden">
+          <Hamburger
+            toggled={isOpen}
+            toggle={setOpen}
+            color="#f97316"
+            size={24}
+          />
+        </span>
+
+        <span className="md:hidden">
+          <Sidebar isMobile isOpen={isOpen} onClose={() => setOpen(false)} />
+        </span>
+
+        <div className="flex items-center gap-4 md:gap-10 text-white">
+          <span>Fulano de Tal</span>
+          <Image
+            src="/avatar.svg"
+            alt="Avatar do Usuário"
+            width={40}
+            height={40}
+          />
+        </div>
+      </section>
+    </header>
+  );
+};

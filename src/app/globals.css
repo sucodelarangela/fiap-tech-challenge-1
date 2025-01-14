@@ -38,7 +38,7 @@ body {
 
 @layer utilities {
   .link {
-    @apply block py-4 border-b-2 border-foreground transition hover:text-lime-500 hover:border-lime-400;
+    @apply block py-4 md:py-0 lg:py-4 border-b-2 border-foreground md:border-transparent lg:border-foreground transition hover:text-lime-500 hover:border-lime-400;
   }
   .link.active {
     @apply font-bold text-lime-600 border-lime-500 transition hover:text-lime-500 hover:border-lime-400;
