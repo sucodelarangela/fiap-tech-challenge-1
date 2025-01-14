@@ -1,5 +1,10 @@
+"use client";
+import React, { useState } from "react";
 import { Transaction } from "@/utils/Transaction";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Modal } from "@/components/Modal";
+import { Button } from "@/components/Button";
+import { AddTransactionForm } from "@/components/AddTransactionForm";
 import styles from "./page.module.css";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 
@@ -8,7 +13,9 @@ function getMonthName(dateString: string): string {
   return date.toLocaleString("pt-BR", { month: "long" });
 }
 
-function getTransactionName(transaction: string) {
+function getTransactionName(transaction: string | undefined) {
+  if (!transaction) return "";
+
   const transactionMap = new Map([
     ["deposit", "depósito"],
     ["transfer", "transferência"],
@@ -19,6 +26,28 @@ function getTransactionName(transaction: string) {
 
 export default function TransactionsPage() {
   const formatCurrency = useFormatCurrency();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] =
+    useState<Transaction | null>(null);
+
+  const openEditModal = (transaction: Transaction) => {
+    setEditingTransaction(transaction);
+    setIsEditModalOpen(true);
+  };
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingTransaction(null);
+  };
+  const openDeleteModal = (transaction: Transaction) => {
+    setEditingTransaction(transaction);
+    setIsDeleteModalOpen(true);
+  };
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setEditingTransaction(null);
+  };
 
   const transactions = [
     new Transaction("1", "deposit", 1000, new Date()),
@@ -50,16 +79,54 @@ export default function TransactionsPage() {
                 className="text-green-500 transition hover:text-green-400"
                 title="Editar"
                 role="button"
+                onClick={() => openEditModal(t)}
               />
               <FaTrash
                 className="text-red-500 transition hover:text-red-400"
                 title="Deletar"
                 role="button"
+                onClick={() => openDeleteModal(t)}
               />
             </div>
           </li>
         ))}
       </ul>
+
+      <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
+        <AddTransactionForm
+          initialType={editingTransaction?.type}
+          initialAmount={editingTransaction?.amount}
+          initialDate={editingTransaction?.date.toISOString().split("T")[0]}
+          title="Editar Transação"
+          buttonText="Salvar Alterações"
+          onSubmit={(transaction) => {
+            alert(`Transação editada: ${JSON.stringify(transaction)}`);
+            closeEditModal();
+          }}
+        />
+      </Modal>
+
+      <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
+        <h2 className="mb-8">Deletar Transação</h2>
+        <p className="mb-8">
+          Esta ação irá excluir definitivamente a transação de{" "}
+          <span className="font-semibold capitalize">
+            {getTransactionName(editingTransaction?.type)}
+          </span>{" "}
+          de{" "}
+          <span className="font-semibold">
+            {formatCurrency(editingTransaction?.amount)}
+          </span>
+          . Gostaria de continuar mesmo assim?
+        </p>
+
+        <div className="flex justify-between">
+          <Button variant="secondary" onClick={() => closeDeleteModal()}>
+            Cancelar
+          </Button>
+          <Button variant="primary">Deletar</Button>
+        </div>
+      </Modal>
     </section>
   );
 }

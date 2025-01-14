@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
-import { AddTransactionPage } from "@/components/AddTransaction";
+import { AddTransactionForm } from "@/components/AddTransactionForm";
 import { Statement } from "@/components/Statement/Statement";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
@@ -71,7 +71,11 @@ export default function HomePage() {
       <Statement />
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <AddTransactionPage />
+        <AddTransactionForm
+          onSubmit={(transaction) => {
+            alert(`Transação criada: ${JSON.stringify(transaction)}`);
+          }}
+        />
       </Modal>
     </>
   );
