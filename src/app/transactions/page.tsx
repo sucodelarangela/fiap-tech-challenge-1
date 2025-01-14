@@ -5,7 +5,6 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/Button";
 import { AddTransactionForm } from "@/components/AddTransactionForm";
-import styles from "./page.module.css";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 
 function getMonthName(dateString: string): string {
@@ -55,11 +54,14 @@ export default function TransactionsPage() {
   ];
 
   return (
-    <section className="col-span-2 lg:col-span-1 bg-foreground rounded-lg p-6">
+    <section className="col-span-1 md:col-span-2 lg:col-span-1 bg-foreground rounded-lg p-6">
       <h2 className="text-white mb-6">Extrato</h2>
       <ul className="bg-white rounded-lg">
         {transactions.map((t) => (
-          <li key={t.id} className={styles.transaction}>
+          <li
+            key={t.id}
+            className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 border-dashed border-b-2 border-lime-500 rounded-lg p-3"
+          >
             <span className="text-lime-500 text-sm font-semibold capitalize">
               {getMonthName(t.date.toString())}
             </span>
@@ -108,7 +110,7 @@ export default function TransactionsPage() {
 
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
         <h2 className="mb-8">Deletar Transação</h2>
-        <p className="mb-8">
+        <p className="rounded-md p-1 mb-8">
           Esta ação irá excluir definitivamente a transação de{" "}
           <span className="font-semibold capitalize">
             {getTransactionName(editingTransaction?.type)}
@@ -121,7 +123,7 @@ export default function TransactionsPage() {
         </p>
 
         <div className="flex justify-between">
-          <Button variant="secondary" onClick={() => closeDeleteModal()}>
+          <Button variant="tertiary" onClick={() => closeDeleteModal()}>
             Cancelar
           </Button>
           <Button variant="primary">Deletar</Button>
