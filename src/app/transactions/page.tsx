@@ -123,7 +123,7 @@ export default function TransactionsPage() {
         </p>
 
         <div className="flex justify-between">
-          <Button variant="secondary" onClick={() => closeDeleteModal()}>
+          <Button variant="tertiary" onClick={() => closeDeleteModal()}>
             Cancelar
           </Button>
           <Button variant="primary">Deletar</Button>
