@@ -6,6 +6,7 @@ import { AddTransactionForm } from "@/components/AddTransactionForm";
 import { LastTransactions } from "@/components/LastTransactions";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { useFinancialServices } from "@/hooks/useFinancialServices";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -16,10 +17,13 @@ const options: Intl.DateTimeFormatOptions = {
 const dataFormatada = new Date().toLocaleDateString("pt-BR", options);
 
 export default function HomePage() {
+  const { user, transactions, transactionService, refreshTransactions } =
+    useFinancialServices();
   const formatCurrency = useFormatCurrency();
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const balance = 2500;
+
+  const balance = user?.balance ?? 0;
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -70,12 +74,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <LastTransactions />
+      <LastTransactions transactions={transactions} />
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AddTransactionForm
           onSubmit={(transaction) => {
-            alert(`Transação criada: ${JSON.stringify(transaction)}`);
+            transactionService.addTransaction(
+              transaction.type,
+              transaction.amount,
+              new Date(transaction.date)
+            );
+            refreshTransactions();
+            closeModal();
           }}
         />
       </Modal>

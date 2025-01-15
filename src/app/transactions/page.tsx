@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Transaction } from "@/utils/Transaction";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/Button";
 import { AddTransactionForm } from "@/components/AddTransactionForm";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { useFinancialServices } from "@/hooks/useFinancialServices";
+import { Transaction } from "@/models/Transaction";
 
 function getMonthName(dateString: string): string {
   const date = new Date(dateString);
@@ -24,6 +25,8 @@ function getTransactionName(transaction: string | undefined) {
 }
 
 export default function TransactionsPage() {
+  const { transactions, transactionService, refreshTransactions } =
+    useFinancialServices();
   const formatCurrency = useFormatCurrency();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -47,11 +50,6 @@ export default function TransactionsPage() {
     setIsDeleteModalOpen(false);
     setEditingTransaction(null);
   };
-
-  const transactions = [
-    new Transaction("1", "deposit", 1000, new Date()),
-    new Transaction("2", "expense", 200, new Date()),
-  ];
 
   return (
     <section className="col-span-1 md:col-span-2 lg:col-span-1 bg-foreground rounded-lg p-6">
@@ -95,39 +93,58 @@ export default function TransactionsPage() {
       </ul>
 
       <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
-        <AddTransactionForm
-          initialType={editingTransaction?.type}
-          initialAmount={editingTransaction?.amount}
-          initialDate={editingTransaction?.date.toISOString().split("T")[0]}
-          title="Editar Transação"
-          buttonText="Salvar Alterações"
-          onSubmit={(transaction) => {
-            alert(`Transação editada: ${JSON.stringify(transaction)}`);
-            closeEditModal();
-          }}
-        />
+        {editingTransaction && (
+          <AddTransactionForm
+            initialType={editingTransaction.type}
+            initialAmount={editingTransaction.amount}
+            initialDate={editingTransaction.date.toISOString().split("T")[0]}
+            title="Editar Transação"
+            buttonText="Salvar Alterações"
+            onSubmit={(transaction) => {
+              transactionService.updateTransaction(
+                editingTransaction.id,
+                transaction.type,
+                transaction.amount,
+                new Date(transaction.date)
+              );
+              refreshTransactions();
+              closeEditModal();
+            }}
+          />
+        )}
       </Modal>
 
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
-        <h2 className="mb-8">Deletar Transação</h2>
-        <p className="rounded-md p-1 mb-8">
-          Esta ação irá excluir definitivamente a transação de{" "}
-          <span className="font-semibold capitalize">
-            {getTransactionName(editingTransaction?.type)}
-          </span>{" "}
-          de{" "}
-          <span className="font-semibold">
-            {formatCurrency(editingTransaction?.amount)}
-          </span>
-          . Gostaria de continuar mesmo assim?
-        </p>
+        {editingTransaction && (
+          <>
+            <h2 className="mb-8">Deletar Transação</h2>
+            <p className="rounded-md p-1 mb-8">
+              Esta ação irá excluir definitivamente a transação de{" "}
+              <span className="font-semibold capitalize">
+                {getTransactionName(editingTransaction.type)}
+              </span>{" "}
+              de{" "}
+              <span className="font-semibold">
+                {formatCurrency(editingTransaction.amount)}
+              </span>
+              . Gostaria de continuar mesmo assim?
+            </p>
 
-        <div className="flex justify-between">
-          <Button variant="tertiary" onClick={() => closeDeleteModal()}>
-            Cancelar
-          </Button>
-          <Button variant="primary">Deletar</Button>
-        </div>
+            <div className="flex justify-between">
+              <Button
+                variant="tertiary"
+                onClick={() => {
+                  transactionService.deleteTransaction(editingTransaction.id);
+                  refreshTransactions();
+                  closeDeleteModal();
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button variant="primary">Deletar</Button>
+            </div>
+          </>
+        )}
       </Modal>
     </section>
   );

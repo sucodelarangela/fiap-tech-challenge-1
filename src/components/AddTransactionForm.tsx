@@ -1,10 +1,9 @@
-import { Button } from "@/components/Button";
 import { useState, useEffect } from "react";
-
-type TransactionType = "deposit" | "transfer" | "expense" | "";
+import { TransactionType } from "@/models/Transaction";
+import { Button } from "@/components/Button";
 
 interface AddTransactionFormProps {
-  initialType?: TransactionType;
+  initialType?: TransactionType | "";
   initialAmount?: number;
   initialDate?: string;
   onSubmit: (transaction: {
@@ -24,7 +23,7 @@ export function AddTransactionForm({
   title = "Adicionar Nova Transação",
   buttonText = "Criar Transação",
 }: AddTransactionFormProps) {
-  const [type, setType] = useState<TransactionType>(initialType);
+  const [type, setType] = useState<TransactionType | "">(initialType);
   const [amount, setAmount] = useState<number>(initialAmount);
   const [date, setDate] = useState<string>(initialDate);
   const isDisabled = amount <= 0 || type === "";
