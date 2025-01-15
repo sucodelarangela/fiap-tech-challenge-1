@@ -54,43 +54,50 @@ export default function TransactionsPage() {
   return (
     <section className="col-span-1 md:col-span-2 lg:col-span-1 bg-foreground rounded-lg p-6">
       <h2 className="text-white mb-6">Extrato</h2>
-      <ul className="bg-white rounded-lg">
-        {transactions.map((t) => (
-          <li
-            key={t.id}
-            className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 border-dashed border-b-2 border-lime-500 rounded-lg p-3"
-          >
-            <span className="text-lime-500 text-sm font-semibold capitalize">
-              {getMonthName(t.date.toString())}
-            </span>
-            <p className="flex justify-between items-center gap-4 capitalize">
-              {getTransactionName(t.type)}
-              <span className="text-gray-400 text-sm">
-                {t.date.toLocaleDateString()}
+
+      {transactions.length === 0 ? (
+        <p className="text-center text-background">
+          Nenhuma transação cadastrada.
+        </p>
+      ) : (
+        <ul className="bg-white rounded-lg">
+          {transactions.map((t) => (
+            <li
+              key={t.id}
+              className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 border-dashed border-b-2 border-lime-500 rounded-lg p-3"
+            >
+              <span className="text-lime-500 text-sm font-semibold capitalize">
+                {getMonthName(t.date.toString())}
               </span>
-            </p>
+              <p className="flex justify-between items-center gap-4 capitalize">
+                {getTransactionName(t.type)}
+                <span className="text-gray-400 text-sm">
+                  {t.date.toLocaleDateString()}
+                </span>
+              </p>
 
-            <p className="font-roboto-mono font-semibold">
-              {formatCurrency(t.amount)}
-            </p>
+              <p className="font-roboto-mono font-semibold">
+                {formatCurrency(t.amount)}
+              </p>
 
-            <div className="flex gap-4 text-lg ml-auto">
-              <FaEdit
-                className="text-green-500 transition hover:text-green-400"
-                title="Editar"
-                role="button"
-                onClick={() => openEditModal(t)}
-              />
-              <FaTrash
-                className="text-red-500 transition hover:text-red-400"
-                title="Deletar"
-                role="button"
-                onClick={() => openDeleteModal(t)}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div className="flex gap-4 text-lg ml-auto">
+                <FaEdit
+                  className="text-green-500 transition hover:text-green-400"
+                  title="Editar"
+                  role="button"
+                  onClick={() => openEditModal(t)}
+                />
+                <FaTrash
+                  className="text-red-500 transition hover:text-red-400"
+                  title="Deletar"
+                  role="button"
+                  onClick={() => openDeleteModal(t)}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <Modal isOpen={isEditModalOpen} onClose={closeEditModal}>
         {editingTransaction && (

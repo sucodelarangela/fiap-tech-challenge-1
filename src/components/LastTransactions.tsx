@@ -22,7 +22,7 @@ function getTransactionName(transaction: string) {
 
 export function LastTransactions({ transactions }: Props) {
   const formatCurrency = useFormatCurrency();
-  const lastTransactions = transactions.slice(0, 4);
+  const lastTransactions = transactions.slice(0, 3);
 
   return (
     <section className="bg-white rounded-lg p-6">

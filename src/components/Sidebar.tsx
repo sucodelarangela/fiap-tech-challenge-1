@@ -18,8 +18,8 @@ export function Sidebar({
   const links = [
     { href: "/", label: "Home" },
     { href: "/transactions", label: "Extrato" },
-    { href: "/investimentos", label: "Investimentos" },
-    { href: "/outros-servicos", label: "Outros Serviços" },
+    { href: "/investments", label: "Investimentos" },
+    { href: "/other-services", label: "Outros Serviços" },
   ];
 
   const mobileClasses = isOpen ? "translate-x-0" : "-translate-x-full";
@@ -45,7 +45,11 @@ export function Sidebar({
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`link ${pathname === link.href ? "active" : ""}`}
+                className={`link ${pathname === link.href ? "active" : ""} ${
+                  ["/investments", "/other-services"].includes(link.href)
+                    ? "disabled"
+                    : ""
+                }`}
                 aria-current={pathname === link.href ? "page" : undefined}
                 onClick={isMobile && onClose ? onClose : undefined}
               >
