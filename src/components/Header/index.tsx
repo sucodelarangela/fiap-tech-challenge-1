@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Hamburger from "hamburger-react";
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from "../SideBar";
 
 export const Header = () => {
   const [isOpen, setOpen] = useState(false);
