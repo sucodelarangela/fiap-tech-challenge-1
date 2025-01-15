@@ -134,14 +134,21 @@ export default function TransactionsPage() {
               <Button
                 variant="tertiary"
                 onClick={() => {
-                  transactionService.deleteTransaction(editingTransaction.id);
-                  refreshData();
                   closeDeleteModal();
                 }}
               >
                 Cancelar
               </Button>
-              <Button variant="primary">Deletar</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  transactionService.deleteTransaction(editingTransaction.id);
+                  refreshData();
+                  closeDeleteModal();
+                }}
+              >
+                Deletar
+              </Button>
             </div>
           </>
         )}
