@@ -51,8 +51,8 @@ export class TransactionService {
       transactions.map((t) => t.toJSON())
     );
 
-    // Atualizar o saldo do usuário
-    const balanceChange = type === "expense" ? -amount : amount;
+    // Atualiza o saldo do usuário
+    const balanceChange = type === "deposit" ? amount : -amount;
     this.userService.updateBalance(balanceChange);
 
     return transaction;
@@ -70,14 +70,9 @@ export class TransactionService {
     if (index === -1) throw new Error("Transaction not found");
 
     const oldTransaction = transactions[index];
-    const oldBalanceChange =
-      oldTransaction.type === "expense"
-        ? oldTransaction.amount
-        : -oldTransaction.amount;
+    const oldBalanceChange = -oldTransaction.getBalanceChange();
 
-    const newBalanceChange = type === "expense" ? -amount : amount;
-
-    transactions[index] = new Transaction(
+    const newTransaction = new Transaction(
       id,
       type,
       amount,
@@ -85,13 +80,17 @@ export class TransactionService {
       oldTransaction.userId
     );
 
+    transactions[index] = newTransaction;
+
     this.storage.saveData(
       this.TRANSACTIONS_KEY,
       transactions.map((t) => t.toJSON())
     );
-    this.userService.updateBalance(oldBalanceChange + newBalanceChange);
+    this.userService.updateBalance(
+      oldBalanceChange + newTransaction.getBalanceChange()
+    );
 
-    return transactions[index];
+    return newTransaction;
   }
 
   public deleteTransaction(id: string): void {
@@ -100,8 +99,7 @@ export class TransactionService {
 
     if (!transaction) throw new Error("Transaction not found");
 
-    const balanceChange =
-      transaction.type === "expense" ? transaction.amount : -transaction.amount;
+    const balanceChange = -transaction.getBalanceChange();
 
     this.storage.saveData(
       this.TRANSACTIONS_KEY,

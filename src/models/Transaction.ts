@@ -29,4 +29,9 @@ export class Transaction {
       userId: this.userId,
     };
   }
+
+  // Calcula saldo
+  getBalanceChange(): number {
+    return this.type === "deposit" ? this.amount : -this.amount;
+  }
 }
