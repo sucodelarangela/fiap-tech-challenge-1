@@ -25,7 +25,7 @@ function getTransactionName(transaction: string | undefined) {
 }
 
 export default function TransactionsPage() {
-  const { transactions, transactionService, refreshTransactions } =
+  const { transactions, transactionService, refreshData } =
     useFinancialServices();
   const formatCurrency = useFormatCurrency();
 
@@ -107,7 +107,7 @@ export default function TransactionsPage() {
                 transaction.amount,
                 new Date(transaction.date)
               );
-              refreshTransactions();
+              refreshData();
               closeEditModal();
             }}
           />
@@ -135,7 +135,7 @@ export default function TransactionsPage() {
                 variant="tertiary"
                 onClick={() => {
                   transactionService.deleteTransaction(editingTransaction.id);
-                  refreshTransactions();
+                  refreshData();
                   closeDeleteModal();
                 }}
               >

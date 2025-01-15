@@ -27,29 +27,36 @@ export function LastTransactions({ transactions }: Props) {
   return (
     <section className="bg-white rounded-lg p-6">
       <h2 className="font-bold pb-6">Últimas Transações</h2>
-      <ul className="grid md:grid-cols-2 md:gap-x-10 lg:grid-cols-1">
-        {lastTransactions.map((t, index) => (
-          <li
-            key={index}
-            className={`flex flex-col gap-2 border-b-2 border-dashed border-lime-500 py-4 ${
-              index === 0 ? "pt-0" : ""
-            }`}
-          >
-            <span className="text-lime-500 text-sm font-semibold capitalize">
-              {getMonthName(t.date.toString())}
-            </span>
-            <p className="flex justify-between items-center capitalize">
-              {getTransactionName(t.type)}
-              <span className="text-gray-400 text-sm">
-                {t.date.toLocaleString()}
+
+      {lastTransactions.length === 0 ? (
+        <p className="text-center text-gray-500">
+          Nenhuma transação cadastrada.
+        </p>
+      ) : (
+        <ul className="grid md:grid-cols-2 md:gap-x-10 lg:grid-cols-1">
+          {lastTransactions.map((t, index) => (
+            <li
+              key={index}
+              className={`flex flex-col gap-2 border-b-2 border-dashed border-lime-500 py-4 ${
+                index === 0 ? "pt-0" : ""
+              }`}
+            >
+              <span className="text-lime-500 text-sm font-semibold capitalize">
+                {getMonthName(t.date.toString())}
               </span>
-            </p>
-            <p className="font-roboto-mono font-semibold">
-              {formatCurrency(t.amount)}
-            </p>
-          </li>
-        ))}
-      </ul>
+              <p className="flex justify-between items-center capitalize">
+                {getTransactionName(t.type)}
+                <span className="text-gray-400 text-sm">
+                  {t.date.toLocaleDateString()}
+                </span>
+              </p>
+              <p className="font-roboto-mono font-semibold">
+                {formatCurrency(t.amount)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

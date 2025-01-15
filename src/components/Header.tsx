@@ -3,8 +3,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Hamburger from "hamburger-react";
 import { Sidebar } from "./Sidebar";
+import { useFinancialServices } from "@/hooks/useFinancialServices";
 
 export const Header = () => {
+  const { user } = useFinancialServices();
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ export const Header = () => {
         </span>
 
         <div className="flex items-center gap-4 md:gap-10 text-white">
-          <span>Fulano de Tal</span>
+          <span>{user && user.name}</span>
           <Image
             src="/avatar.svg"
             alt="Avatar do Usuário"
