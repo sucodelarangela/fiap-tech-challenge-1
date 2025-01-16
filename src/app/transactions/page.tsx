@@ -78,6 +78,7 @@ export default function TransactionsPage() {
               </p>
 
               <p className="font-roboto-mono font-semibold">
+                {["transfer", "expense"].includes(t.type) && "- "}
                 {formatCurrency(t.amount)}
               </p>
 
