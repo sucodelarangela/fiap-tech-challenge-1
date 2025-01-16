@@ -7,6 +7,7 @@ import { AddTransactionForm } from "@/components/AddTransactionForm";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 import { useFinancialServices } from "@/hooks/useFinancialServices";
 import { Transaction } from "@/models/Transaction";
+import { toast } from "sonner";
 
 function getMonthName(dateString: string): string {
   const date = new Date(dateString);
@@ -115,6 +116,7 @@ export default function TransactionsPage() {
                 new Date(transaction.date)
               );
               refreshData();
+              toast.success("Transação editada com sucesso!");
               closeEditModal();
             }}
           />
@@ -151,6 +153,7 @@ export default function TransactionsPage() {
                 onClick={() => {
                   transactionService.deleteTransaction(editingTransaction.id);
                   refreshData();
+                  toast.success("Transação excluída com sucesso!");
                   closeDeleteModal();
                 }}
               >
