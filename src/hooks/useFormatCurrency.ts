@@ -1,6 +1,6 @@
 const useFormatCurrency = () => {
   const formatCurrency = (amount: number | undefined) => {
-    if (!amount) return;
+    if (amount === undefined) return;
 
     const value = new Intl.NumberFormat("pt-BR", {
       currency: "BRL",
