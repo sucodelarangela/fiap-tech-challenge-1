@@ -7,6 +7,7 @@ import { LastTransactions } from "@/components/LastTransactions";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 import { useFinancialServices } from "@/hooks/useFinancialServices";
+import { toast } from "sonner";
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -85,6 +86,7 @@ export default function HomePage() {
               new Date(transaction.date)
             );
             refreshData();
+            toast.success("Transação criada com sucesso!");
             closeModal();
           }}
         />
