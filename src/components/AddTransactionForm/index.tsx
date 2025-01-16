@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/models/Transaction";
 import { Button } from "@/components/Button";
+import { NumericFormat } from "react-number-format";
 
 interface AddTransactionFormProps {
   initialType?: TransactionType | "";
@@ -24,17 +25,21 @@ export function AddTransactionForm({
   buttonText = "Criar Transação",
 }: AddTransactionFormProps) {
   const [type, setType] = useState<TransactionType | "">(initialType);
-  const [amount, setAmount] = useState<number>(initialAmount);
+  const [amount, setAmount] = useState<string>(initialAmount.toString());
   const [date, setDate] = useState<string>(initialDate);
-  const isDisabled = amount <= 0 || type === "";
+  const isDisabled = parseFloat(amount) <= 0 || type === "";
 
   const handleSubmit = () => {
-    onSubmit({ type: type as TransactionType, amount, date });
+    onSubmit({
+      type: type as TransactionType,
+      amount: parseFloat(amount),
+      date,
+    });
   };
 
   useEffect(() => {
     setType(initialType);
-    setAmount(initialAmount);
+    setAmount(initialAmount.toString());
     setDate(initialDate);
   }, [initialType, initialAmount, initialDate]);
 
@@ -60,12 +65,19 @@ export function AddTransactionForm({
           <label htmlFor="amount" className="block mb-1">
             Valor
           </label>
-          <input
+          <NumericFormat
             id="amount"
-            type="number"
             value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            onValueChange={(values) => setAmount(values.value)}
+            prefix="R$ "
+            decimalSeparator=","
+            thousandSeparator="."
+            decimalScale={2}
+            allowLeadingZeros={false}
+            allowNegative={false}
+            fixedDecimalScale
             className="w-full p-4 border border-foreground rounded-lg"
+            placeholder="R$ 0,00"
             required
           />
         </div>

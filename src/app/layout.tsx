@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/SideBar";
 import "./globals.css";
@@ -21,6 +22,7 @@ export default function RootLayout({
         <main className="grid lg:grid-cols-[180px_1fr_280px] gap-6 max-w-7xl m-auto p-6">
           <Sidebar />
           {children}
+          <Toaster richColors />
         </main>
       </body>
     </html>
