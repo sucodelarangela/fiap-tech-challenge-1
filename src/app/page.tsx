@@ -57,14 +57,12 @@ export default function HomePage() {
                 className="text-orange-600"
                 role="button"
                 onClick={handleBalanceVisibility}
-              >
-                coisa
-              </FaEyeSlash>
+              />
             )}
           </div>
           <div>
             <p className="pb-2">Conta Corrente</p>
-            <p className="font-roboto-mono text-2xl md:text-3xl md:pr-16">
+            <p className="font-roboto-mono text-2xl break-all md:text-3xl md:pr-16">
               {isBalanceVisible ? formatCurrency(balance) : "R$ ******"}
             </p>
           </div>
