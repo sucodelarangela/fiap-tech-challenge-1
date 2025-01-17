@@ -38,6 +38,13 @@ export function AddTransactionForm({
   };
 
   useEffect(() => {
+    const maxLength = 16;
+    if (amount && amount.length > maxLength) {
+      setAmount(amount.substring(0, maxLength));
+    }
+  }, [amount]);
+
+  useEffect(() => {
     setType(initialType);
     setAmount(initialAmount.toString());
     setDate(initialDate);

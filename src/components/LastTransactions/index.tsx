@@ -50,7 +50,7 @@ export function LastTransactions({ transactions }: Props) {
                   {t.date.toLocaleDateString()}
                 </span>
               </p>
-              <p className="font-roboto-mono font-semibold">
+              <p className="font-roboto-mono font-semibold break-all">
                 {["transfer", "expense"].includes(t.type) && "- "}
                 {formatCurrency(t.amount)}
               </p>

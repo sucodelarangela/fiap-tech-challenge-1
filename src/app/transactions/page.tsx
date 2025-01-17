@@ -53,7 +53,7 @@ export default function TransactionsPage() {
   };
 
   return (
-    <section className="col-span-1 md:col-span-2 lg:col-span-1 bg-foreground rounded-lg p-6">
+    <section className="col-span-1 bg-foreground rounded-lg p-6">
       <h2 className="text-white mb-6">Extrato</h2>
 
       {transactions.length === 0 ? (
@@ -77,7 +77,7 @@ export default function TransactionsPage() {
                 </span>
               </p>
 
-              <p className="font-roboto-mono font-semibold">
+              <p className="font-roboto-mono font-semibold break-all">
                 {["transfer", "expense"].includes(t.type) && "- "}
                 {formatCurrency(t.amount)}
               </p>
