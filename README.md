@@ -96,6 +96,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - `npm run test`: Runs unit tests with Jest.
 - `npm run test:watch`: Runs tests in "watch" mode.
 
+## Video Demonstration
+
+To better understand how the application works, check out our demonstration video showcasing the main features and functionalities of the Financial Manager. Watch the video to see the application in action, including how to add transactions, view the transaction list, and more.
+
+[Watch the video here](https://drive.google.com/file/d/1SESAsKUryhgHXAoAfdg5sS3AvyzKfN0b/view?usp=sharing)
+
+## Access the Application
+
+You can access the live application via the link below:
+
+[FIAP Tech Challenge - Financial Manager](https://fiap-tech-challenge-1.vercel.app/)
+
 ## Author
 
 Developed by **Angela Caldas**, **Guilherme** e **Paula Freitas**.
