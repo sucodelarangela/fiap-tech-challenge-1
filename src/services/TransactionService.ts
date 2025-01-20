@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Transaction, TransactionType } from "@/models/Transaction";
 import { StorageService } from "./StorageService";
 import { UserService } from "./UserService";
-import { Transaction, TransactionType } from "@/models/Transaction";
 
 export class TransactionService {
   private storage: StorageService;
@@ -25,7 +25,7 @@ export class TransactionService {
 
     return this.getStoredTransactions()
       .filter((t) => t.userId === user.id)
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   public addTransaction(
