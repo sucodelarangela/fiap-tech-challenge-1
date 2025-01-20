@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { Modal } from "@/components/Modal";
-import { Button } from "@/components/Button";
 import { AddTransactionForm } from "@/components/AddTransactionForm";
-import useFormatCurrency from "@/hooks/useFormatCurrency";
+import { Button } from "@/components/Button";
+import { Modal } from "@/components/Modal";
 import { useFinancialServices } from "@/hooks/useFinancialServices";
+import useFormatCurrency from "@/hooks/useFormatCurrency";
 import { Transaction } from "@/models/Transaction";
+import { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "sonner";
 
 function getMonthName(dateString: string): string {
@@ -73,7 +73,9 @@ export default function TransactionsPage() {
               <p className="flex justify-between items-center gap-4 capitalize">
                 {getTransactionName(t.type)}
                 <span className="text-gray-400 text-sm">
-                  {t.date.toLocaleDateString()}
+                  {new Date(t.date).toLocaleDateString("pt-BR", {
+                    timeZone: "UTC",
+                  })}
                 </span>
               </p>
 
@@ -106,7 +108,9 @@ export default function TransactionsPage() {
           <AddTransactionForm
             initialType={editingTransaction.type}
             initialAmount={editingTransaction.amount}
-            initialDate={editingTransaction.date.toISOString().split("T")[0]}
+            initialDate={
+              new Date(editingTransaction.date).toISOString().split("T")[0]
+            }
             title="Editar Transação"
             buttonText="Salvar Alterações"
             onSubmit={(transaction) => {

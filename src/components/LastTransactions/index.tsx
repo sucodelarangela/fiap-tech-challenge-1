@@ -1,4 +1,3 @@
-import React from "react";
 import useFormatCurrency from "@/hooks/useFormatCurrency";
 import { Transaction } from "@/models/Transaction";
 
@@ -47,7 +46,9 @@ export function LastTransactions({ transactions }: Props) {
               <p className="flex justify-between items-center capitalize">
                 {getTransactionName(t.type)}
                 <span className="text-gray-400 text-sm">
-                  {t.date.toLocaleDateString()}
+                  {new Date(t.date).toLocaleDateString("pt-BR", {
+                    timeZone: "UTC",
+                  })}
                 </span>
               </p>
               <p className="font-roboto-mono font-semibold break-all">
